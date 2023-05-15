@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped( _ => new DroneContext());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IDroneService, DroneService>();
+builder.Services.AddScoped<IMedicationService, MedicationService>();
 
 var mapperConfig = new MapperConfiguration(mc =>
 {

@@ -9,6 +9,7 @@ namespace Drones.Mappers
         public MappingProfile()
         {
             CreateMap<DroneViewModel, Drone>();
+            CreateMap<MedicationViewModel, Medication>();
         }
     }
 }

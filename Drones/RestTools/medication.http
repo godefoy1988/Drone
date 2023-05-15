@@ -1,0 +1,10 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+POST http://localhost:5199/Medication/Register1 HTTP/1.1
+Content-Type: multipart/form-data;boundary=WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Length: 24153
+
+--WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data;name="File";filename="example.txt"
+
+--WebKitFormBoundary7MA4YWxkTrZu0gW--

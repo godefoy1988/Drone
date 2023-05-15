@@ -21,4 +21,10 @@ public class DroneController : ControllerBase
     {
         return await _droneService.Register(droneView);
     }
+
+    [HttpPost("[action]/droneId")]
+    public async Task<bool> LoadMedication(int droneId, [FromBody] List<Medication> medications)
+    {
+        return true;
+    }
 }

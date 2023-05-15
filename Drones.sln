@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Drones", "Drones\Drones.csproj", "{1FC7AA6F-F949-493D-B362-ACFD4171E6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drones.Model", "Drones.Model\Drones.Model.csproj", "{8793F044-7617-4A39-B8AF-7862D5C75229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Drones.Model", "Drones.Model\Drones.Model.csproj", "{8793F044-7617-4A39-B8AF-7862D5C75229}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

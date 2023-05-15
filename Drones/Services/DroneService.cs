@@ -14,11 +14,17 @@ namespace Drones.Services
             _repository = repository;
             _mapper = mapper;
         }
+
         public async Task<bool> Register(DroneViewModel droneView)
         {
             await _repository.AddAsync(_mapper.Map<Drone>(droneView));
             var result = await _repository.SaveChangesAsync();
             return result != 0;
+        }
+
+        public Task<bool> LoadMedication(int droneId, [FromBody] List<Medication> medications)
+        {
+            throw new NotImplementedException();
         }
     }
 }
