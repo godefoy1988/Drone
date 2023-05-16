@@ -25,7 +25,7 @@ public class MedicationService : IMedicationService
         medicationView.ImageName = imageName;
         medicationView.PathImage = pathName;
         var medicationEntity = _mapper.Map<Medication>(medicationView);
-        await _unitOfWork.GetMedicationRepo().AddAsync(medicationEntity);
+        _unitOfWork.GetMedicationRepo().Update(medicationEntity);
         await _unitOfWork.SaveChangesAsync();
         return medicationEntity.Id;
     }

@@ -19,14 +19,9 @@ public class DroneService : IDroneService
     public async Task<int> Register(DroneViewModel droneView)
     {
         var droneEntity = _mapper.Map<Drone>(droneView);
-        await _unitOfWork.GetDroneRepo().AddAsync(droneEntity);
+        _unitOfWork.GetDroneRepo().Update(droneEntity);
         await _unitOfWork.SaveChangesAsync();
         return droneEntity.Id;
-    }
-
-    public Task<bool> LoadMedication(int droneId, List<int> medicationIds)
-    {
-        throw new NotImplementedException();
     }
 }
 

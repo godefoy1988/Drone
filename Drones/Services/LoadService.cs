@@ -15,11 +15,12 @@ public class LoadService : ILoadService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    public async Task<bool> Register(LoadViewModel loadView)
+    public async Task<int> Register(LoadViewModel loadView)
     {
-        await _unitOfWork.GetLoadRepo().AddAsync(_mapper.Map<Load>(loadView));
-        var result = await _unitOfWork.SaveChangesAsync();
-        return result != 0;
+        var loadEntity = _mapper.Map<Load>(loadView);
+        _unitOfWork.GetLoadRepo().Update(loadEntity);
+        await _unitOfWork.SaveChangesAsync();
+        return loadEntity.Id;
     }
 }
 

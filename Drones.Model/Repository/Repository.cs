@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Drones.Model.Context;
 using Drones.Model.Repository.Interface;
+//using System.Data.Entity.Migrations;
 
 namespace Drones.Model.Repository;
 
@@ -18,6 +19,10 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         await _dbSet.AddAsync(data);
     }
+    public T Update(T data)
+    {
+        return _dbSet.Update(data).Entity;
+    }
     public Task<T> GetById(int id)
     {
         return _dbSet.SingleAsync(x => x.Id == id);
@@ -25,6 +30,6 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     public async Task<IEnumerable<T>> GetAll(IEnumerable<int> ids)
     {
         return await _dbSet.Where( t => ids.Contains(t.Id)).ToListAsync();
-    }
+    }    
 }
 

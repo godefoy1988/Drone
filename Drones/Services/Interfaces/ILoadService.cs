@@ -2,6 +2,6 @@
 {
     public interface ILoadService
     {
-        Task<bool> Register(LoadViewModel loadView);
+        Task<int> Register(LoadViewModel loadView);
     }
 }
