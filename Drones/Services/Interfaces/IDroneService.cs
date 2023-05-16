@@ -2,6 +2,7 @@
 {
     public interface IDroneService
     {
-        Task<int> Register(DroneViewModel droneView);        
+        Task<int> Register(DroneViewModel droneView);
+        Task<IEnumerable<int>> GetAvailableDronesForLoading();
     }
 }

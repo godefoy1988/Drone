@@ -23,5 +23,10 @@ public class DroneService : IDroneService
         await _unitOfWork.SaveChangesAsync();
         return droneEntity.Id;
     }
+
+    public async Task<IEnumerable<int>> GetAvailableDronesForLoading()
+    {
+        return (await _unitOfWork.GetDroneRepo().GetAllAsync()).ToList().Where(drone => Helpers.Helpers.IsDroneAvailableForLoad(drone.Id, _unitOfWork)).Select(drone => drone.Id);     
+    }
 }
 

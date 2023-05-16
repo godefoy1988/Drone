@@ -20,5 +20,11 @@ public class DroneController : ControllerBase
     public async Task<int> Register([FromBody] DroneViewModel droneView)
     {
         return await _droneService.Register(droneView);
-    }    
+    }
+
+    [HttpGet("[action]")]
+    public async Task<IEnumerable<int>> GetAvailableDronesForLoading()
+    {
+        return await _droneService.GetAvailableDronesForLoading();
+    }
 }

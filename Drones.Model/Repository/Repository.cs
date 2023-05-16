@@ -28,8 +28,12 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         return _dbSet.SingleAsync(x => x.Id == id);
     }
-    public async Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids)
+    public async Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids = default)
     {
+        if(ids == null)
+        {
+            return _dbSet.AsEnumerable();
+        }
         return await _dbSet.Where( t => ids.Contains(t.Id)).ToListAsync();
     }
     public IEnumerable<T> Where(Func<T, bool> filter, List<string> includes = default)

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Drones.Extensions;
 using Drones.Model.Repository.Interface;
 using Drones.Model.UnitOfWork.Interfaces;
 using Drones.Services.Interfaces;
 using System.Linq;
+using Drones.Helpers;
 
 namespace Drones.Services;
 
@@ -22,7 +22,7 @@ public class LoadService : ILoadService
         var loadEntity = _mapper.Map<Load>(loadView);
         loadEntity.Creation = DateTime.Now;
 
-        if (await Helpers.IsDroneAvailableForLoad(loadView.DroneId, loadView.MedicationId, _unitOfWork))
+        if (await Helpers.Helpers.IsDroneAvailableForThisLoad(loadView.DroneId, loadView.MedicationId, _unitOfWork))
         {
             _unitOfWork.GetLoadRepo().Update(loadEntity);
             await _unitOfWork.SaveChangesAsync();

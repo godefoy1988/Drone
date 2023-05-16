@@ -7,7 +7,7 @@ public interface IRepository<T> where T : EntityBase
     Task AddAsync(T data);
     T Update(T data);
     Task<T> GetById(int id);
-    Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids);
+    Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids = default);
     IEnumerable<T> Where(Func<T, bool> filter, List<string> includes = default);
 }
 
