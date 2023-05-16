@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Drones.Extensions;
 using Drones.Model.Repository.Interface;
 using Drones.Model.UnitOfWork.Interfaces;
 using Drones.Services.Interfaces;
@@ -15,20 +16,17 @@ public class LoadService : ILoadService
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-    } 
+    }
     public async Task<int> Register(LoadViewModel loadView)
     {
         var loadEntity = _mapper.Map<Load>(loadView);
         loadEntity.Creation = DateTime.Now;
 
-        var droneWeightLimit = await GetWeightDrone(loadView.DroneId);
-        var totalWeightByDrone = await GetTotalWeightByDrone(loadView.DroneId);
-        var totalWeightByMedications = await GetTotalWeightByMedications(loadView.MedicationId);
-        if (totalWeightByDrone + totalWeightByMedications < droneWeightLimit)
-        {            
+        if (await Helpers.IsDroneAvailableForLoad(loadView.DroneId, loadView.MedicationId, _unitOfWork))
+        {
             _unitOfWork.GetLoadRepo().Update(loadEntity);
             await _unitOfWork.SaveChangesAsync();
-            return loadEntity.Id;            
+            return loadEntity.Id;
         }
         return -1;
     }
