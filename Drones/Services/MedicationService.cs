@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Drones.Model.Repository.Interface;
+using Drones.Model.UnitOfWork.Interfaces;
 using Drones.Services.Interfaces;
 using System.Security.Cryptography;
 
@@ -7,25 +8,26 @@ namespace Drones.Services;
 
 public class MedicationService : IMedicationService
 {
-    private readonly IRepository<Medication> _repository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IWebHostEnvironment _environment;
 
-    public MedicationService(IRepository<Medication> repository, IMapper mapper, IWebHostEnvironment environment)
+    public MedicationService(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
         _environment = environment;
     }
 
-    public async Task<bool> Register(MedicationViewModel medicationView)
+    public async Task<int> Register(MedicationViewModel medicationView)
     {
         var (imageName, pathName) = await SaveImage(medicationView.File);
         medicationView.ImageName = imageName;
         medicationView.PathImage = pathName;
-        await _repository.AddAsync(_mapper.Map<Medication>(medicationView));
-        var result = await _repository.SaveChangesAsync();
-        return result != 0;
+        var medicationEntity = _mapper.Map<Medication>(medicationView);
+        await _unitOfWork.GetMedicationRepo().AddAsync(medicationEntity);
+        await _unitOfWork.SaveChangesAsync();
+        return medicationEntity.Id;
     }
 
     private async Task<(string,string)> SaveImage(IFormFile file)

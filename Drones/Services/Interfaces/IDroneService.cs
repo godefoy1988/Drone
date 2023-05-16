@@ -2,7 +2,7 @@
 {
     public interface IDroneService
     {
-        Task<bool> Register(DroneViewModel droneView);
-        Task<bool> LoadMedication(int droneId, [FromBody] List<Medication> medications);
+        Task<int> Register(DroneViewModel droneView);
+        Task<bool> LoadMedication(int droneId, List<int> medicationIds);
     }
 }

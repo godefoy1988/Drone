@@ -3,6 +3,8 @@ using Drones.Mappers;
 using Drones.Model.Context;
 using Drones.Model.Repository;
 using Drones.Model.Repository.Interface;
+using Drones.Model.UnitOfWork;
+using Drones.Model.UnitOfWork.Interfaces;
 using Drones.Services;
 using Drones.Services.Interfaces;
 
@@ -16,12 +18,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped( _ => new DroneContext());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDroneService, DroneService>();
 builder.Services.AddScoped<IMedicationService, MedicationService>();
+builder.Services.AddScoped<ILoadService, LoadService>();
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfile());
+    mc.AddProfile(new MappingProfile(builder.Services.BuildServiceProvider().GetRequiredService<IUnitOfWork>()));    
     mc.ReplaceMemberName("_", "");
 });
 IMapper mapper = mapperConfig.CreateMapper();

@@ -13,6 +13,7 @@ public class DroneContext : DbContext
     private readonly string connectionString;
     public DbSet<Drone> Drones { get; set; }
     public DbSet<Medication> Medication { get; set; }
+    public DbSet<Load> Loads { get; set; }
 
     public DroneContext()                    
     {

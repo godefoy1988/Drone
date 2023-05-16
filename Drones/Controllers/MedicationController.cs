@@ -16,7 +16,7 @@ public class MedicationController : Controller
     }
 
     [HttpPost("[action]")]
-    public async Task<bool> Register([FromForm] MedicationViewModel medicationView)
+    public async Task<int> Register([FromForm] MedicationViewModel medicationView)
     {
         return await _medicationService.Register(medicationView);
     }    

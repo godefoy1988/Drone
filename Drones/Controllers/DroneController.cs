@@ -17,14 +17,14 @@ public class DroneController : ControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<bool> Register([FromBody] DroneViewModel droneView)
+    public async Task<int> Register([FromBody] DroneViewModel droneView)
     {
         return await _droneService.Register(droneView);
     }
 
     [HttpPost("[action]/droneId")]
-    public async Task<bool> LoadMedication(int droneId, [FromBody] List<Medication> medications)
+    public async Task<bool> LoadMedication(int droneId, [FromBody] List<int> medicationIds)
     {
-        return true;
+        return await _droneService.LoadMedication(droneId, medicationIds);
     }
 }

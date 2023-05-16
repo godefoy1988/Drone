@@ -14,15 +14,17 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         _dbContext = dbContext;
         _dbSet = _dbContext.Set<T>();
     }
-
     public async Task AddAsync(T data)
     {
-        await _dbSet.AddAsync(data);        
+        await _dbSet.AddAsync(data);
     }
-
-    public async Task<int> SaveChangesAsync()
+    public Task<T> GetById(int id)
     {
-        return await _dbContext.SaveChangesAsync();
+        return _dbSet.SingleAsync(x => x.Id == id);
+    }
+    public async Task<IEnumerable<T>> GetAll(IEnumerable<int> ids)
+    {
+        return await _dbSet.Where( t => ids.Contains(t.Id)).ToListAsync();
     }
 }
 

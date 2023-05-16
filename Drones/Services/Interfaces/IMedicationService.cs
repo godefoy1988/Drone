@@ -2,6 +2,6 @@
 {
     public interface IMedicationService
     {
-        Task<bool> Register(MedicationViewModel medicationView);
+        Task<int> Register(MedicationViewModel medicationView);
     }
 }
