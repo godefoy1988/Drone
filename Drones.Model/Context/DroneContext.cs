@@ -23,14 +23,8 @@ public class DroneContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseInMemoryDatabase(this.connectionString);
+        //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
-
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    base.OnModelCreating(modelBuilder);       
-
-    //    modelBuilder.Entity<Load>().
-    //}
 }
 
 

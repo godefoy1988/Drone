@@ -8,6 +8,6 @@ public interface IRepository<T> where T : EntityBase
     T Update(T data);
     Task<T> GetById(int id);
     Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids);
-    IEnumerable<T> Where(Func<T, bool> filter, string include, string include2);
+    IEnumerable<T> Where(Func<T, bool> filter, List<string> includes = default);
 }
 

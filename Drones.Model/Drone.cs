@@ -8,5 +8,5 @@ public class Drone : EntityBase
     public double Weight { get; set; }
     public int BatteryCapacity { get; set; }
     public string State { get; set; }
-    public List<Medication> Medication { get; set; }
+    public List<Medication> Medication { get; set; } 
 }

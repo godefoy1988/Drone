@@ -32,9 +32,17 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         return await _dbSet.Where( t => ids.Contains(t.Id)).ToListAsync();
     }
-    public IEnumerable<T> Where(Func<T, bool> filter, string include, string include2 )
+    public IEnumerable<T> Where(Func<T, bool> filter, List<string> includes = default)
     {
-        return _dbSet.Include(include).Include(include2).Where(filter);
+        if (includes == null)
+            return _dbSet.Where(filter);
+        else
+        {
+            var includesNotEmpty = includes.Where(i => !string.IsNullOrEmpty(i));
+            var iquerable = _dbSet.AsQueryable();
+            includes.ForEach(i => iquerable = iquerable.Include(i).AsNoTracking());
+            return iquerable.Where(filter);
+        }
     }
 }
 

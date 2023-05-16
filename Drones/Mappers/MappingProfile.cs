@@ -14,15 +14,7 @@ public class MappingProfile : Profile
 
         CreateMap<DroneViewModel, Drone>();
         CreateMap<MedicationViewModel, Medication>();
-        CreateMap<LoadViewModel, Load>()
-            .ForMember(dst => dst.Drone,
-            opt => opt.MapFrom(src => _unitOfWork.GetDroneRepo().GetById(src.DroneId).GetAwaiter().GetResult()))
-            .ForMember(dst => dst.Medications,
-            opt => opt.MapFrom(src => _unitOfWork.GetMedicationRepo().GetAllAsync(src.Medications).GetAwaiter().GetResult()));
-        CreateMap<Load, LoadViewModel>()
-            .ForMember(dst => dst.DroneId,
-            opt => opt.MapFrom(src => src.Drone.Id))
-            .ForMember(dst => dst.Medications,
-            opt => opt.MapFrom(src => src.Medications.Select(m => m.Id)));
+        CreateMap<LoadViewModel, Load>();
+        CreateMap<Load, LoadViewModel>();
     }
 }
