@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Drones.Model.Context;
 using Drones.Model.Repository.Interface;
-//using System.Data.Entity.Migrations;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Drones.Model.Repository;
 
@@ -27,9 +28,13 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     {
         return _dbSet.SingleAsync(x => x.Id == id);
     }
-    public async Task<IEnumerable<T>> GetAll(IEnumerable<int> ids)
+    public async Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids)
     {
         return await _dbSet.Where( t => ids.Contains(t.Id)).ToListAsync();
-    }    
+    }
+    public IEnumerable<T> Where(Func<T, bool> filter, string include, string include2 )
+    {
+        return _dbSet.Include(include).Include(include2).Where(filter);
+    }
 }
 

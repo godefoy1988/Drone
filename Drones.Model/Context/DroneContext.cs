@@ -24,6 +24,13 @@ public class DroneContext : DbContext
     {
         optionsBuilder.UseInMemoryDatabase(this.connectionString);
     }
+
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    base.OnModelCreating(modelBuilder);       
+
+    //    modelBuilder.Entity<Load>().
+    //}
 }
 
 

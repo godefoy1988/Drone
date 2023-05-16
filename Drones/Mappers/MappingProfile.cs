@@ -18,6 +18,11 @@ public class MappingProfile : Profile
             .ForMember(dst => dst.Drone,
             opt => opt.MapFrom(src => _unitOfWork.GetDroneRepo().GetById(src.DroneId).GetAwaiter().GetResult()))
             .ForMember(dst => dst.Medications,
-            opt => opt.MapFrom(src => _unitOfWork.GetLoadRepo().GetAll(src.Medications).GetAwaiter().GetResult()));
+            opt => opt.MapFrom(src => _unitOfWork.GetMedicationRepo().GetAllAsync(src.Medications).GetAwaiter().GetResult()));
+        CreateMap<Load, LoadViewModel>()
+            .ForMember(dst => dst.DroneId,
+            opt => opt.MapFrom(src => src.Drone.Id))
+            .ForMember(dst => dst.Medications,
+            opt => opt.MapFrom(src => src.Medications.Select(m => m.Id)));
     }
 }

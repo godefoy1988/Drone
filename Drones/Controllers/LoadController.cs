@@ -21,5 +21,11 @@ public class LoadController : Controller
     {
         return await _loadService.Register(loadView);
     }
+
+    [HttpGet("[action]/{droneId}")]
+    public async Task<IEnumerable<LoadViewModel>> GetLoadedMedicationsByDrone(int droneId)
+    {
+        return await _loadService.GetLoadedMedicationsByDrone(droneId);
+    }
 }
 
