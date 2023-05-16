@@ -27,4 +27,10 @@ public class DroneController : ControllerBase
     {
         return await _droneService.GetAvailableDronesForLoading();
     }
+
+    [HttpGet("[action]/{droneId}")]
+    public async Task<int> GetBatteryLevel(int droneId)
+    {
+        return await _droneService.GetBatteryLevel(droneId);
+    }
 }

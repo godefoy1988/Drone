@@ -28,5 +28,10 @@ public class DroneService : IDroneService
     {
         return (await _unitOfWork.GetDroneRepo().GetAllAsync()).ToList().Where(drone => Helpers.Helpers.IsDroneAvailableForLoad(drone.Id, _unitOfWork)).Select(drone => drone.Id);     
     }
+
+    public async Task<int> GetBatteryLevel(int droneId)
+    {
+        return (await _unitOfWork.GetDroneRepo().GetById(droneId)).BatteryCapacity;
+    }
 }
 
