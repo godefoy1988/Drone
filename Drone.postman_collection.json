@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "19a564aa-a77e-46fd-84f7-4b79779a035e",
+		"name": "Drone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8140899"
+	},
+	"item": [
+		{
+			"name": "Drones",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"SerialNumber\":\"qweqweqeqe\",\r\n    \"Model\":\"Middleweight\",\r\n    \"Weight\":35,\r\n    \"BatteryCapacity\":34,\r\n    \"State\":\"IDLE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5199/Drone/Register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Drone",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAvailableDronesForLoading",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5199/Drone/GetAvailableDronesForLoading",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Drone",
+								"GetAvailableDronesForLoading"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBatteryLevel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5199/Drone/GetBatteryLevel/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Drone",
+								"GetBatteryLevel",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeState",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5199/Drone/ChangeState/1/DELIVERING",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Drone",
+								"ChangeState",
+								"1",
+								"DELIVERING"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medications",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Name",
+									"value": "1Salbu_tam-ol2",
+									"type": "text"
+								},
+								{
+									"key": "Weight",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "Code",
+									"value": "11AADD234_23A",
+									"type": "text"
+								},
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/D:/@Imagenes/Leonardo_da_Vinci_-_Virgin_and_Child_with_St_Anne_C2RMF_retouched.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5199/Medication/Register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Medication",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DroneId\":1,\r\n    \"MedicationId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5199/Load/Register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Load",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetLoadedMedicationsByDrone",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5199/Load/GetLoadedMedicationsByDrone/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5199",
+							"path": [
+								"Load",
+								"GetLoadedMedicationsByDrone",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
