@@ -9,16 +9,32 @@ public static class Helpers
 {
     public static bool IsDroneAvailableForLoad(int droneId, IUnitOfWork unitOfWork)
     {
-        var droneWeightLimit = GetWeightDrone(droneId, unitOfWork).GetAwaiter().GetResult();
-        var totalWeightByDrone = GetTotalWeightByDrone(droneId, unitOfWork).GetAwaiter().GetResult();
-        return droneWeightLimit > totalWeightByDrone;
+        if (IsDroneInCorrectStateForLoad(droneId, unitOfWork).GetAwaiter().GetResult())
+        {
+            var droneWeightLimit = GetWeightDrone(droneId, unitOfWork).GetAwaiter().GetResult();
+            var totalWeightByDrone = GetTotalWeightByDrone(droneId, unitOfWork).GetAwaiter().GetResult();
+            return droneWeightLimit > totalWeightByDrone;
+        }
+        return false;
     }
     public static async Task<bool> IsDroneAvailableForThisLoad(int droneId, int medicationId, IUnitOfWork unitOfWork)
     {
-        var droneWeightLimit = await GetWeightDrone(droneId, unitOfWork);
-        var totalWeightByDrone = await GetTotalWeightByDrone(droneId, unitOfWork);
-        var totalWeightByMedications = await GetTotalWeightByMedications(medicationId, unitOfWork);
-        return totalWeightByDrone + totalWeightByMedications < droneWeightLimit;
+        if (await IsDroneInCorrectStateForLoad(droneId, unitOfWork))
+        {
+            var droneWeightLimit = await GetWeightDrone(droneId, unitOfWork);
+            var totalWeightByDrone = await GetTotalWeightByDrone(droneId, unitOfWork);
+            var totalWeightByMedications = await GetTotalWeightByMedications(medicationId, unitOfWork);
+            return totalWeightByDrone + totalWeightByMedications < droneWeightLimit;
+        }
+        return false;
+    }
+
+    private static async Task<bool> IsDroneInCorrectStateForLoad(int droneId, IUnitOfWork unitOfWork)
+    {
+        var statesForLoad = new List<string> { "IDLE", "LOADING" };
+        var droneState = (await unitOfWork.GetDroneRepo().GetById(droneId)).State;
+        return statesForLoad.Contains(droneState);
+         
     }
 
     private static async Task<double> GetWeightDrone(int droneId, IUnitOfWork unitOfWork)

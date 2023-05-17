@@ -13,7 +13,6 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -32,6 +31,7 @@ builder.Services.AddScoped<IDroneService, DroneService>();
 builder.Services.AddScoped<IMedicationService, MedicationService>();
 builder.Services.AddScoped<ILoadService, LoadService>();
 builder.Services.AddHostedService<CheckDronesHostedService>();
+builder.Services.AddHostedService<WorkflowDronesLifeHostedService>();
 
 
 var mapperConfig = new MapperConfiguration(mc =>

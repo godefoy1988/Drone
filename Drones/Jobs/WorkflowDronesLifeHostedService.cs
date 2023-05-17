@@ -1,28 +1,25 @@
 ﻿using Drones.Model.UnitOfWork.Interfaces;
-
 namespace Drones.Jobs;
+using Drones.Extensions;
 
-public class CheckDronesHostedService : IHostedService, IDisposable
+public class WorkflowDronesLifeHostedService : IHostedService, IDisposable
 {
     private Timer? _timer = null;
     private IUnitOfWork _unitOfWork;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<CheckDronesHostedService> _logger;
+    private readonly IServiceProvider _serviceProvider;   
 
-
-    public CheckDronesHostedService(IServiceProvider serviceProvider, ILogger<CheckDronesHostedService> logger)
+    public WorkflowDronesLifeHostedService(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
+        _serviceProvider = serviceProvider;       
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _timer = new Timer(CheckDronesBatteryLevels, null, TimeSpan.Zero,
-        TimeSpan.FromSeconds(10));
+        _timer = new Timer(WorkFlowDronesLife, null, TimeSpan.Zero,
+        TimeSpan.FromSeconds(5));
         return Task.CompletedTask;
     }
-    private void CheckDronesBatteryLevels(object? state)
+    private void WorkFlowDronesLife(object? state)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -32,7 +29,8 @@ public class CheckDronesHostedService : IHostedService, IDisposable
                 .GetAwaiter()
                 .GetResult()
                 .ToList()
-                .ForEach(d => _logger.LogInformation($"The drone {d.Id} has state {d.State} and battery level is {d.BatteryCapacity}"));
+                .ForEach(drone => drone.ShitfState());
+            _unitOfWork.SaveChangesAsync().GetAwaiter().GetResult();
         }
     }
 

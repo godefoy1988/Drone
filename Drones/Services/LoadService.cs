@@ -29,24 +29,7 @@ public class LoadService : ILoadService
             return loadEntity.Id;
         }
         return -1;
-    }
-
-    private async Task<double> GetWeightDrone(int droneId)
-    {
-        return (await _unitOfWork.GetDroneRepo().GetById(droneId)).Weight;
-    }
-
-    private async Task<double> GetTotalWeightByDrone(int droneId)
-    {
-        return _unitOfWork.GetLoadRepo()
-            .Where(load => load.DroneId == droneId, new List<string> { "Medication" })
-            .Select(load => load.Medication.Weight).Sum();
-    }
-
-    private async Task<double> GetTotalWeightByMedications(int medicationId)
-    {
-        return (await _unitOfWork.GetMedicationRepo().GetById(medicationId)).Weight;
-    }
+    }    
 
     public async Task<IEnumerable<LoadViewModel>> GetLoadedMedicationsByDrone(int droneId)
     {
