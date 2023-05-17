@@ -36,7 +36,7 @@ builder.Services.AddHostedService<CheckDronesHostedService>();
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfile(builder.Services.BuildServiceProvider().GetRequiredService<IUnitOfWork>()));    
+    mc.AddProfile(new MappingProfile());    
     mc.ReplaceMemberName("_", "");
 });
 IMapper mapper = mapperConfig.CreateMapper();

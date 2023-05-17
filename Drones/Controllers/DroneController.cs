@@ -1,5 +1,6 @@
 using Drones.Model.Repository.Interface;
 using Drones.Services.Interfaces;
+using Drones.ViewModel;
 
 namespace Drones.Controllers;
 
@@ -32,5 +33,11 @@ public class DroneController : ControllerBase
     public async Task<int> GetBatteryLevel(int droneId)
     {
         return await _droneService.GetBatteryLevel(droneId);
+    }
+
+    [HttpPut("[action]")]
+    public async Task<DroneViewModel> ChangeState(DroneChangeStateViewModel droneChangeState)
+    {
+        return await _droneService.ChangeState(droneChangeState);
     }
 }

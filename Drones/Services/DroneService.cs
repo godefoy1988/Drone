@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Drones.Model;
 using Drones.Model.Repository.Interface;
+using Drones.Model.UnitOfWork;
 using Drones.Model.UnitOfWork.Interfaces;
 using Drones.Services.Interfaces;
 
@@ -31,7 +33,20 @@ public class DroneService : IDroneService
 
     public async Task<int> GetBatteryLevel(int droneId)
     {
-        return (await _unitOfWork.GetDroneRepo().GetById(droneId)).BatteryCapacity;
+        var droneEntity = (await _unitOfWork.GetDroneRepo().GetById(droneId));
+        return droneEntity != null ? droneEntity.BatteryCapacity : 0;
+    }
+
+    public async Task<DroneViewModel> ChangeState(DroneChangeStateViewModel droneChangeState)
+    {
+        var droneEntity = await _unitOfWork.GetDroneRepo().GetById(droneChangeState.Id);
+
+        if (droneEntity != null && (droneChangeState.State != "LOADING" || droneEntity.BatteryCapacity > 25))
+        {
+            droneEntity.State = droneChangeState.State;
+            return _mapper.Map<DroneViewModel>(_unitOfWork.GetDroneRepo().Update(droneEntity));
+        }
+        return new DroneViewModel { Id = -1 };
     }
 }
 

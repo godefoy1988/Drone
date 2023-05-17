@@ -23,10 +23,11 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     public T Update(T data)
     {
         return _dbSet.Update(data).Entity;
-    }
-    public Task<T> GetById(int id)
+    }   
+
+    public Task<T?> GetById(int id)
     {
-        return _dbSet.SingleAsync(x => x.Id == id);
+        return _dbSet.FirstOrDefaultAsync(x => x.Id == id);
     }
     public async Task<IEnumerable<T>> GetAllAsync(IEnumerable<int> ids = default)
     {
@@ -47,6 +48,6 @@ public class Repository<T> : IRepository<T> where T : EntityBase
             includes.ForEach(i => iquerable = iquerable.Include(i).AsNoTracking());
             return iquerable.Where(filter);
         }
-    }
+    }    
 }
 

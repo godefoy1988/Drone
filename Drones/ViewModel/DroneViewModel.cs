@@ -6,6 +6,7 @@ namespace Drones.ViewModel
 {
     public class DroneViewModel
     {
+        public int Id { get; set; }
         [MaxLength(100)]
         public string SerialNumber { get; set; }
         [OneOfThemValidation(Values = "Lightweight,Middleweight,Cruiserweight,Heavyweight")]

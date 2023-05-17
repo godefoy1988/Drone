@@ -6,15 +6,11 @@ using System.Globalization;
 namespace Drones.Mappers;
 
 public class MappingProfile : Profile
-{
-    private readonly IUnitOfWork _unitOfWork;
-    public MappingProfile(IUnitOfWork unitOfWork)
+{    
+    public MappingProfile()
     {
-        _unitOfWork = unitOfWork;
-
-        CreateMap<DroneViewModel, Drone>();
+        CreateMap<DroneViewModel, Drone>().ReverseMap();
         CreateMap<MedicationViewModel, Medication>();
-        CreateMap<LoadViewModel, Load>();
-        CreateMap<Load, LoadViewModel>();
+        CreateMap<LoadViewModel, Load>().ReverseMap();        
     }
 }
